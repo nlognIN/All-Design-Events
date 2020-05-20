@@ -1,0 +1,22 @@
+{
+  "name": "design_events",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dermayank/all-design-events.git"
+  },
+  "author": "Mayank Joshi, Hemant Joshi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dermayank/all-design-events/issues"
+  },
+  "homepage": "https://github.com/dermayank/all-design-events#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
