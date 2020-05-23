@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 var data = require('./src/api/post_api.js');
 
-app.use('/api/v1',data);
+app.use('/api/events/v1',data);
 
 app.listen(port, hostname, function(){
 	console.log(`Server running at http://${hostname}:${port}/`);
