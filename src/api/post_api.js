@@ -2,29 +2,16 @@ var express = require('express');
 var mongoose = require('mongoose');
 var router = express.Router();
 var utility = require('./utility_functions.js')
+var events = require('./mongo_connect.js')
+var active_events = events.active_events;
 
 mongoose.connect('mongodb://localhost/design_events', { useNewUrlParser: true , useFindAndModify: false, useUnifiedTopology: true });
 
-var eventschema = mongoose.Schema({    
-    user_id: String,
-    event_title: String,
-    slug: String,
-    created_on: String,
-    location: String,
-    registration_link: String,
-    event_date: String,
-    event_time: String,
-    price: String,
-    mode: String,
-    organizer: String,
-    image: String,
-    description: String,
-    clicks: Number
-});
-var events = mongoose.model("active_events", eventschema);
+
 
 router.get("/", function(req, res){
-    events.find({},{'_id':0, '__v':0}).exec(function(err, response){
+
+    active_events.find({},{'_id':0, '__v':0}).exec(function(err, response){
         if(err) throw err;
         res.status(200);
         res.json(response);
@@ -41,7 +28,7 @@ router.get("/:type/:value", function(req, res){
         var type = req.params.type;
         var value = req.params.value;
         console.log(type+" "+value);
-        events.find({[type]:value},{'_id':0,'__v':0},function(err, response){
+        active_events.find({[type]:value},{'_id':0,'__v':0},function(err, response){
             if(err)
                 res.json({message: "Bad Request", value:req.params.type});
             else{
@@ -54,18 +41,19 @@ router.get("/:type/:value", function(req, res){
 
 
 router.post("/", function(req, res){
+	console.log("auth_key="+req.header("auth_key"));
     if(!req.body.user_id || !req.body.event_title || !req.body.location || !req.body.registration_link ||
      !req.body.event_date || !req.body.price || !req.body.mode || !req.body.organizer){
         res.status(400);
         res.json({message: "Bad Request"});
     }
     else{
-        const curr_date = new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
-        var newEvent = new events({
+
+        var newEvent = new active_events({
             user_id: req.body.user_id,
             event_title: req.body.event_title,
             slug: utility.generate_slug(req.body.event_title),
-            created_on: curr_date,
+            created_on: utility.current_date(),
             location: req.body.location,
             registration_link: req.body.registration_link,
             event_date: req.body.event_date,
@@ -77,7 +65,7 @@ router.post("/", function(req, res){
             description: req.body.description || "",
             clicks: req.body.clicks || 0
           });
-          newEvent.save(function(err, mov){
+          newEvent.save(function(err, insrt_result){
              if(err)
                res.json({message: "Database error", type: err});
              else{

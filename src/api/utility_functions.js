@@ -19,5 +19,26 @@ module.exports = {
 
 	    var random_pad = Math.floor(Math.random() * (9999 - 1000) + 9000)
 	 	return str +'-'+ random_pad.toString();
+	},
+
+
+
+	current_date:function(){
+		var today = new Date();
+
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; 
+		var yyyy = today.getFullYear();
+		
+		if(dd<10) 
+    		dd='0'+dd;
+	
+
+		if(mm<10) 
+    		mm='0'+mm;
+	 
+		today = dd+'/'+mm+'/'+yyyy;
+
+		return today;
 	}
 }

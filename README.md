@@ -24,3 +24,37 @@ The Mongodb collection contains following coloums
 Start by importing data testing data in mongodb using following commands
 
 `$ mongoimport -d design_events -c active_events --type csv --headerline --file /your/file/location/design_event.csv`
+
+
+###### Get Request format
+
+curl -X POST http://localhost:3000/api/events/v1/  - Return all the events and all the corresponding details around them
+
+curl -X POST http://localhost:3000/api/events/v1/key/value
+
+1. key: mandatory - following are the only values that can act as key for using get with filters.
+	1. slug:
+	2. mode
+	3. price 
+	4. location
+	5. user_id
+
+2. value: mandatory - value of the corresponding key parameter
+
+
+
+###### Post Request format
+
+curl -X POST http://localhost:3000/api/events/v1/ -H 'content-type: application/json' -d '{"user_id":"---","event_title":"---","location":"---","registration_link":"---","event_date":"---","time":"---","price":"---","mode":"---","organizer":"---","image":"---", "description":"---"}'
+
+1. user_id: mandatory
+2. event title: mandatory
+3. location: mandatory
+4. registration_link: mandatory
+5. event_date: mandatory
+6. event_time: optional
+7. price: mandatory
+8. mode: mandatory
+9. oranizer: mandatory
+10. image: optional
+11. description: optional
