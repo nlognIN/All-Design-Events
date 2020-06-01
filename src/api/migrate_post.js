@@ -8,7 +8,7 @@ var past_events = events.past_events;
 module.exports = {
 
 	migrate:function(){
-		var type = "created_on";
+		var type = "event_date";
 		var value = utility.current_date(); 
 
 		active_events.find({[type]:value},{'_id':0,'__v':0},function(err, response){

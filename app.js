@@ -17,7 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-var j = schedule.scheduleJob('59 * * * * *', function(){
+var j = schedule.scheduleJob('10 9 11 * * *', function(){
 	migration_api.migrate()
 });
 
@@ -25,6 +25,16 @@ var j = schedule.scheduleJob('59 * * * * *', function(){
 app.use('/api/events/v1',post_api);
 app.use('/api/past_events',past_events_api);
 
+app.get("/", function(req, res){
+	res.status(200);
+	res.json("hello world");
+	console.log('hello');
+});
+
 app.listen(port, hostname, function(){
-	console.log(`Server running at http://${hostname}:${port}/`);
+	console.log("|=====================================|");
+	console.log("|===| Server Started Successfully |===|")
+	console.log(`|===|   http://${hostname}:${port}/    |===|`);
+	console.log("|=====================================|");
+
 });

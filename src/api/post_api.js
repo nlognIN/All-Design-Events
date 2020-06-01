@@ -5,9 +5,6 @@ var utility = require('./utility_functions.js')
 var events = require('./mongo_connect.js')
 var active_events = events.active_events;
 
-mongoose.connect('mongodb://localhost/design_events', { useNewUrlParser: true , useFindAndModify: false, useUnifiedTopology: true });
-
-
 
 router.get("/", function(req, res){
 

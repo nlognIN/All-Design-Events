@@ -1,3 +1,4 @@
+var crypto = require('crypto');
 module.exports = {
 
 	generate_slug:function(str){
@@ -17,8 +18,8 @@ module.exports = {
 	    	.replace(/\s+/g, '-') // collapse whitespace and replace by -
 	    	.replace(/-+/g, '-'); // collapse dashes
 
-	    var random_pad = Math.floor(Math.random() * (9999 - 1000) + 9000)
-	 	return str +'-'+ random_pad.toString();
+	    var hash = crypto.createHash('md5').update(str).digest('hex')
+	 	return str +'-'+ hash.slice(0,6);
 	},
 
 
