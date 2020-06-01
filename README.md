@@ -1,9 +1,9 @@
 # all-design-events
 
 
-### Getting started
+## Getting started
 
-###### Mongo Collections & setup
+### Mongo Collections & setup
 
 The Mongodb collection contains following coloums
 1. Event Title
@@ -26,11 +26,11 @@ Start by importing data testing data in mongodb using following commands
 `$ mongoimport -d design_events -c active_events --type csv --headerline --file /your/file/location/design_event.csv`
 
 
-###### Get Request format
+### Get Request format
 
-curl -X POST http://localhost:3000/api/events/v1/  - Return all the events and all the corresponding details around them
+curl -X GET http://localhost:3000/api/events/v1/  - Return all the events and all the corresponding details around them
 
-curl -X POST http://localhost:3000/api/events/v1/key/value
+curl -X GET http://localhost:3000/api/events/v1/key/value
 
 1. key: mandatory - following are the only values that can act as key for using get with filters.
 	1. slug:
@@ -43,7 +43,7 @@ curl -X POST http://localhost:3000/api/events/v1/key/value
 
 
 
-###### Post Request format
+### Post Request format
 
 curl -X POST http://localhost:3000/api/events/v1/ -H 'content-type: application/json' -d '{"user_id":"---","event_title":"---","location":"---","registration_link":"---","event_date":"---","time":"---","price":"---","mode":"---","organizer":"---","image":"---", "description":"---"}'
 
