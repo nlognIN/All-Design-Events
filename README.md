@@ -3,6 +3,13 @@
 
 ## Getting started
 
+Create a .env file inside project folder with following values:
+
+HOST=localhost
+PORT=3000
+mongo_url = mongodb://localhost/design_events
+
+
 ### Mongo Collections & setup
 
 The Mongodb collection contains following coloums
