@@ -26,9 +26,11 @@ Start by importing data testing data in mongodb using following commands
 `$ mongoimport -d design_events -c active_events --type csv --headerline --file /your/file/location/design_event.csv`
 
 
-### Get Request format
+### Get Request format for Active Events
 
-curl -X GET http://localhost:3000/api/events/v1/  - Return all the events and all the corresponding details around them
+##### 1. Without Lazy Loading 
+
+curl -X GET http://localhost:3000/api/events/v1/  - Return all active events and all corresponding details about them
 
 curl -X GET http://localhost:3000/api/events/v1/key/value
 
@@ -40,6 +42,12 @@ curl -X GET http://localhost:3000/api/events/v1/key/value
 	5. user_id
 
 2. value: mandatory - value of the corresponding key parameter
+
+##### 2. With Lazy Loading 
+
+curl -X GET http://localhost:3000/api/events/v1/?pageNum=val  - Return skips first valx10(for first 10 events pageNum=1, for next 10 events pageNum=2 an so on.) events and returns all corresponding details about them
+
+curl -X GET http://localhost:3000/api/events/v1/key/value?pageNum=val
 
 
 
@@ -58,3 +66,10 @@ curl -X POST http://localhost:3000/api/events/v1/ -H 'content-type: application/
 9. oranizer: mandatory
 10. image: optional
 11. description: optional
+
+
+
+### Get Request format for Active Events
+curl -X GET http://localhost:3000/api/past_events  - Return all past events and all corresponding details about them
+
+curl -X GET http://localhost:3000/api/past_events?pageNum=val  - Return skips first valx10(for first 10 events pageNum=1, for next 10 events pageNum=2 an so on.) events and returns all corresponding details about them
