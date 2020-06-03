@@ -4,15 +4,24 @@ var router = express.Router();
 var utility = require('./utility_functions.js')
 var events = require('./mongo_connect.js')
 var active_events = events.active_events;
-
+var itemsPerPage = 10;
 
 router.get("/", function(req, res){
-
-    active_events.find({},{'_id':0, '__v':0}).exec(function(err, response){
-        if(err) throw err;
-        res.status(200);
-        res.json(response);
-    })
+    if(req.query.pageNum){
+        var pageNum = req.query.pageNum;
+        active_events.find({},{'_id':0, '__v':0}).skip(pageNum>0?( (pageNum-1)*itemsPerPage):0).limit(itemsPerPage).exec(function(err, response){
+            if(err) throw err;
+            res.status(200);
+            res.json(response);
+        })
+    }
+    else{
+        active_events.find({},{'_id':0, '__v':0}).exec(function(err, response){
+            if(err) throw err;
+            res.status(200);
+            res.json(response);
+        })
+    }
 });
 
 router.get("/:type/:value", function(req, res){
@@ -24,15 +33,26 @@ router.get("/:type/:value", function(req, res){
     else{
         var type = req.params.type;
         var value = req.params.value;
-        console.log(type+" "+value);
-        active_events.find({[type]:value},{'_id':0,'__v':0},function(err, response){
-            if(err)
-                res.json({message: "Bad Request", value:req.params.type});
-            else{
+        
+        if(req.query.pageNum){
+            var pageNum = req.query.pageNum;
+            active_events.find({[type]:value},{'_id':0, '__v':0}).skip(pageNum>0?( (pageNum-1)*itemsPerPage):0).limit(itemsPerPage).exec(function(err, response){
+                if(err) throw err;
                 res.status(200);
                 res.json(response);
-            }
-        });
+            })
+        }
+
+        else{
+            active_events.find({[type]:value},{'_id':0,'__v':0},function(err, response){
+                if(err)
+                    res.json({message: "Bad Request", value:req.params.type});
+                else{
+                    res.status(200);
+                    res.json(response);
+                }
+            });
+        }
     }
 });
 
