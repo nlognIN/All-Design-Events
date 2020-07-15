@@ -33,13 +33,19 @@ Start by importing data testing data in mongodb using following commands
 `$ mongoimport -d design_events -c active_events --type csv --headerline --file /your/file/location/design_event.csv`
 
 
-### Get Request format for Active Events
+---
+
+
+### Request format for Active Events
+
+
+### GET Request format
 
 ##### 1. Without Lazy Loading 
 
-curl -X GET http://localhost:3000/api/events/v1/  - Return all active events and all corresponding details about them
+curl -X GET http://localhost:3000/api/events/  - Return all active events and all corresponding details about them
 
-curl -X GET http://localhost:3000/api/events/v1/key/value
+curl -X GET http://localhost:3000/api/events/key/value
 
 1. key: mandatory - following are the only values that can act as key for using get with filters.
 	1. slug:
@@ -58,7 +64,7 @@ curl -X GET http://localhost:3000/api/events/v1/key/value?pageNum=val
 
 
 
-### Post Request format
+### POST Request format
 
 curl -X POST http://localhost:3000/api/events/v1/ -H 'content-type: application/json' -d '{"user_id":"---","event_title":"---","location":"---","registration_link":"---","event_date":"---","time":"---","price":"---","mode":"---","organizer":"---","image":"---", "description":"---"}'
 
@@ -75,8 +81,53 @@ curl -X POST http://localhost:3000/api/events/v1/ -H 'content-type: application/
 11. description: optional
 
 
+---
 
-### Get Request format for Active Events
+
+### Request format for Past events
+
+### GET Request format for Past Events
 curl -X GET http://localhost:3000/api/past_events  - Return all past events and all corresponding details about them
 
 curl -X GET http://localhost:3000/api/past_events?pageNum=val  - Return skips first valx10(for first 10 events pageNum=1, for next 10 events pageNum=2 an so on.) events and returns all corresponding details about them
+
+### PUT Request format for Past Events to update past events
+
+curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/json' -d '
+{ 
+	
+	"slug":"-------", 
+	"links":"------" 
+} '
+
+1. slug: mandatory
+2. links: mandatory
+
+
+---
+
+
+### Request format for Users Database
+
+### GET Request format for Users Database
+curl -X GET http://localhost:3000/api/users  - Return all users and all corresponding details about them
+
+curl -X GET http://localhost:3000/api/user_id/value  - Returns all the details of a user, uniquely represetned using using user_id(which is email)
+
+### POST Request format for Users Database
+
+curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/json' -d '
+{ 
+	
+	"user_id":"-------", 
+	"user_fullname":"------",
+	"user_image":"---------"
+	"user_bio: "----------",
+    "isadmin": 1 or 0 
+} '
+
+1. user_id mandatory (this will be the email address)
+2. user_fullname: mandatory 
+3. user_image: optional
+4. user_bio: optional
+5. isadmin: mandatory (values should be 1 or 0. 1:yes, 0:no)

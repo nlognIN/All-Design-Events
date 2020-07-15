@@ -31,6 +31,25 @@ router.get("/", function(req, res){
       	});	
     }
 });
+
+router.put("/", function(req, res){
+    if(!req.body.slug||!req.body.links){
+        res.status(400);
+        res.json({message: "Bad Request"});
+    }
+    else{
+        var url = req.body.links;
+        var key = req.body.slug;
  
+      past_events.findOneAndUpdate({"slug":key},{$set:{"links":url}},{new: true}).exec(function(err,response){
+             if(err)
+                res.json({message: "Query error", type:err});
+             else{
+                res.status(201);
+                res.json({Status:"Success",Details: response});
+            }
+        });
+    }
+});
 
 module.exports = router;

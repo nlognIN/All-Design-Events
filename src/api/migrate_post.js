@@ -32,8 +32,10 @@ module.exports = {
 			            mode: response[i].mode,
 			            organizer: response[i].organizer,
 			            image: response[i].image || "",
-			            description: response[i].description || "",
-			            clicks: response[i].clicks || 0
+						description: response[i].description || "",
+						links:"",
+						clicks: response[i].clicks || 0,
+						links: ""
 			        });
 
 			        newEvent.save(function(err, temp_response){
