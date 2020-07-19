@@ -1,5 +1,4 @@
 var express = require('express');
-var mongoose = require('mongoose');
 var router = express.Router();
 var utility = require('./utility_functions.js')
 var events = require('./mongo_connect.js')
@@ -45,8 +44,9 @@ router.get("/:type/:value", function(req, res){
 
         else{
             active_events.find({[type]:value},{'_id':0,'__v':0},function(err, response){
-                if(err)
+                if(err){
                     res.json({message: "Bad Request", value:req.params.type});
+                }
                 else{
                     res.status(200);
                     res.json(response);

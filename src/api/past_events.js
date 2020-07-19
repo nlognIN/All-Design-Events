@@ -1,5 +1,4 @@
 var express = require('express');
-var mongoose = require('mongoose');
 var router = express.Router();
 var utility = require('./utility_functions.js')
 var events = require('./mongo_connect.js')
@@ -33,7 +32,7 @@ router.get("/", function(req, res){
 });
 
 router.put("/", function(req, res){
-    if(!req.body.slug||!req.body.links){
+    if(!req.body.slug || !req.body.links){
         res.status(400);
         res.json({message: "Bad Request"});
     }

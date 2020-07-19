@@ -58,15 +58,15 @@ curl -X GET http://localhost:3000/api/events/key/value
 
 ##### 2. With Lazy Loading 
 
-curl -X GET http://localhost:3000/api/events/v1/?pageNum=val  - Return skips first valx10(for first 10 events pageNum=1, for next 10 events pageNum=2 an so on.) events and returns all corresponding details about them
+curl -X GET http://localhost:3000/api/events/?pageNum=val  - Return skips first valx10(for first 10 events pageNum=1, for next 10 events pageNum=2 an so on.) events and returns all corresponding details about them
 
-curl -X GET http://localhost:3000/api/events/v1/key/value?pageNum=val
+curl -X GET http://localhost:3000/api/events/key/value?pageNum=val
 
 
 
 ### POST Request format
 
-curl -X POST http://localhost:3000/api/events/v1/ -H 'content-type: application/json' -d '{"user_id":"---","event_title":"---","location":"---","registration_link":"---","event_date":"---","time":"---","price":"---","mode":"---","organizer":"---","image":"---", "description":"---"}'
+curl -X POST http://localhost:3000/api/events/ -H 'content-type: application/json' -d '{"user_id":"---","event_title":"---","location":"---","registration_link":"---","event_date":"---","time":"---","price":"---","mode":"---","organizer":"---","image":"---", "description":"---"}'
 
 1. user_id: mandatory
 2. event title: mandatory
@@ -123,11 +123,39 @@ curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/
 	"user_fullname":"------",
 	"user_image":"---------"
 	"user_bio: "----------",
-    "isadmin": 1 or 0 
+    "isadmin": 1 or 0, 
+	"orgnization":"-------",
 } '
 
-1. user_id mandatory (this will be the email address)
+1. user_id: mandatory (this will be the email address)
 2. user_fullname: mandatory 
 3. user_image: optional
 4. user_bio: optional
 5. isadmin: mandatory (values should be 1 or 0. 1:yes, 0:no)
+
+
+### Request format for Users Subscription to Events
+
+
+### GET Request format to find all users subscribed to an event identified by slug
+
+curl -X GET http://localhost:8080/api/event_subscription/key/value
+
+1. key : slug (mandatory)
+2. value: slug value (mandatory)
+
+
+### POST Request format for subscribing user to an event
+
+curl -X POST http://localhost:8080/api/event_subscription/ -H 'content-type: application/json' -d '
+{ 
+    "slug": "---------",
+    "name": "---------",
+    "email": "--------"
+	"phone": "--------"
+}'
+
+1. slug: mandatory
+2. name: mandatory
+3. email: mandatory
+4. phone: optional

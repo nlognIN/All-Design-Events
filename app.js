@@ -8,7 +8,8 @@ var cors = require('cors');
 var post_api = require('./src/api/post_api.js');
 var migration_api = require('./src/api/migrate_post.js');
 var past_events_api = require('./src/api/past_events.js')
-var users_api = require('./src/api/users_data.js')
+var users_api = require('./src/api/users_database.js')
+var eventreg_api = require('./src/api/event_subscription.js')
 
 
 var app = express();
@@ -22,9 +23,10 @@ var j = schedule.scheduleJob('10 9 22 * * *', function(){
 });
 
 
-app.use('/api/events/',post_api);
-app.use('/api/past_events',past_events_api);
-app.use('/api/users',users_api);
+app.use('/api/events/', post_api);
+app.use('/api/past_events', past_events_api);
+app.use('/api/users', users_api);
+app.use('/api/event_subscription', eventreg_api);
 
 app.get("/", function(req, res){
 	res.status(200);

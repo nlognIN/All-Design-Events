@@ -1,5 +1,3 @@
-var express = require('express');
-var mongoose = require('mongoose');
 var utility = require('./utility_functions.js')
 var events = require('./mongo_connect.js')
 var active_events = events.active_events;

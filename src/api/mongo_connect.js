@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
-
+ 
 mongoose.connect('mongodb://localhost/design_events', { useNewUrlParser: true , useFindAndModify: false, useUnifiedTopology: true });
 
+/* Schema Start */
+
+/* Active Events Schema */
 var eventschema = mongoose.Schema({    
     user_id: String,
     event_title: String,
@@ -19,6 +22,7 @@ var eventschema = mongoose.Schema({
     clicks: Number
 });
 
+/* Past Events Schema */
 var past_eventschema = mongoose.Schema({    
     user_id: String,
     event_title: String,
@@ -37,6 +41,7 @@ var past_eventschema = mongoose.Schema({
     links: String
 });
 
+/* Registered Users Schema */
 var userschema = mongoose.Schema({    
     user_id: String,
     user_name: String,
@@ -44,11 +49,27 @@ var userschema = mongoose.Schema({
     created_on: String,
     user_image: String,
     user_bio: String,
-    isadmin: Number
+    isadmin: Number,
+    organization: String
 });
+
+/* Event Registration Schema */
+var users_eventregschema = mongoose.Schema({
+    user_email: String,
+    user_name: String,
+    user_phone: String
+});
+
+var event_registrationschema = mongoose.Schema({
+    event_id: String,
+    reg_users: [users_eventregschema]
+});
+
+/* Schema End */
 
 const active_events = mongoose.model("active_events", eventschema);
 const past_events = mongoose.model("past_events", past_eventschema); 
 const users_db = mongoose.model("user_db", userschema); 
+const events_registrations = mongoose.model("event_registrations", event_registrationschema); 
 
-module.exports = {active_events, past_events,users_db};
+module.exports = {active_events, past_events, users_db, events_registrations};
