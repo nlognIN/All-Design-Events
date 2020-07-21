@@ -31,8 +31,7 @@ module.exports = {
 			            organizer: response[i].organizer,
 			            image: response[i].image || "",
 						description: response[i].description || "",
-						links:"",
-						clicks: response[i].clicks || 0,
+						clicks: response[i].clicks,
 						links: ""
 			        });
 

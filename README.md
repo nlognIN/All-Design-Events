@@ -112,11 +112,11 @@ curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/
 ### GET Request format for Users Database
 curl -X GET http://localhost:3000/api/users  - Return all users and all corresponding details about them
 
-curl -X GET http://localhost:3000/api/user_id/value  - Returns all the details of a user, uniquely represetned using using user_id(which is email)
+curl -X GET http://localhost:3000/api/users/user_id/value  - Returns all the details of a user, uniquely represetned using using user_id(which is email)
 
 ### POST Request format for Users Database
 
-curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/json' -d '
+curl -X POST http://localhost:3000/api/users -H 'content-type: application/json' -d '
 { 
 	
 	"user_id":"-------", 
@@ -131,7 +131,7 @@ curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/
 2. user_fullname: mandatory 
 3. user_image: optional
 4. user_bio: optional
-5. isadmin: mandatory (values should be 1 or 0. 1:yes, 0:no)
+5. isadmin: mandatory (values should be 1 or 0. 1:yes, 0:no, default value 0)
 
 
 ### Request format for Users Subscription to Events
@@ -139,7 +139,7 @@ curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/
 
 ### GET Request format to find all users subscribed to an event identified by slug
 
-curl -X GET http://localhost:8080/api/event_subscription/key/value
+curl -X GET http://localhost:3000/api/event_subscription/key/value
 
 1. key : slug (mandatory)
 2. value: slug value (mandatory)
@@ -147,7 +147,7 @@ curl -X GET http://localhost:8080/api/event_subscription/key/value
 
 ### POST Request format for subscribing user to an event
 
-curl -X POST http://localhost:8080/api/event_subscription/ -H 'content-type: application/json' -d '
+curl -X POST http://localhost:3000/api/event_subscription/ -H 'content-type: application/json' -d '
 { 
     "slug": "---------",
     "name": "---------",

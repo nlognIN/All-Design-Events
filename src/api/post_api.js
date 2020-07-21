@@ -80,7 +80,7 @@ router.post("/", function(req, res){
             organizer: req.body.organizer,
             image: req.body.image || "",
             description: req.body.description || "",
-            clicks: req.body.clicks || 0
+            clicks: 0
           });
           newEvent.save(function(err, insrt_result){
              if(err)
