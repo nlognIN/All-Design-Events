@@ -71,7 +71,7 @@ curl -X POST http://localhost:3000/api/events/ -H 'content-type: application/jso
 1. user_id: mandatory
 2. event title: mandatory
 3. location: mandatory
-4. registration_link: mandatory
+4. registration_link: optional
 5. event_date: mandatory
 6. event_time: optional
 7. price: mandatory
@@ -159,3 +159,11 @@ curl -X POST http://localhost:3000/api/event_subscription/ -H 'content-type: app
 2. name: mandatory
 3. email: mandatory
 4. phone: optional
+
+
+### Request format for Exporting Events Subscriptions in CSV
+
+curl -X GET http://localhost:3000/api/export_csv/:key/:value
+
+1. key : slug (mandatory)
+2. value: slug value (mandatory)
