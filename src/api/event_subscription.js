@@ -56,7 +56,7 @@ router.post("/", function(req,res){
                             res.json({message: "Can't register user to event", type: err});
                         else{
                             res.status(201);
-                            res.json({ Message: "User registered to event",insert_result});
+                            res.json({ Message: "User Successfully Subscribed",insert_result});
                         }
                     });
                 }
@@ -66,7 +66,7 @@ router.post("/", function(req,res){
                            res.json({message: "Query error", type:err});
                         else{
                            res.status(201);
-                           res.json({Status:"Users Successfully Subscribed",Details: response});
+                           res.json({Status:"User Successfully Subscribed",Details: response});
                        }
                    });
                 }

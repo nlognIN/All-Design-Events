@@ -59,20 +59,27 @@ router.get("/:type/:value", function(req, res){
 
 router.post("/", function(req, res){
 	console.log("auth_key="+req.header("auth_key"));
-    if(!req.body.user_id || !req.body.event_title || !req.body.location || !req.body.registration_link ||
+    if(!req.body.user_id || !req.body.event_title || !req.body.location ||
      !req.body.event_date || !req.body.price || !req.body.mode || !req.body.organizer){
         res.status(400);
         res.json({message: "Bad Request"});
     }
     else{
+        var reg_link;
+        var temp_slug = utility.generate_slug(req.body.event_title);
+        
+        if(!req.body.registration_link)
+            reg_link = req.body.registration_link;
+        else
+            reg_link = "https://alldesignevents.in/"+req.body.registration_link;
 
         var newEvent = new active_events({
             user_id: req.body.user_id,
             event_title: req.body.event_title,
-            slug: utility.generate_slug(req.body.event_title),
+            slug: temp_slug,
             created_on: utility.current_date(),
             location: req.body.location,
-            registration_link: req.body.registration_link,
+            registration_link: reg_link,
             event_date: req.body.event_date,
             event_time: req.body.event_time || '',
             price: req.body.price,

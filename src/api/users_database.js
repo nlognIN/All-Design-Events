@@ -67,7 +67,7 @@ router.post("/", function(req, res){
                             res.json({message: "Database error", type: err});
                         else{
                             res.status(201);
-                            res.json({ Message: "User Created",insert_result});
+                            res.json({ Message: "User Registered Succeaadully",insert_result});
                         }
                     });
                 }
