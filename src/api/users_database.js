@@ -5,7 +5,6 @@ var users = require('./mongo_connect.js')
 var user_db = users.users_db;
 
 router.get("/", function(req, res){
-
       user_db.find({},{'_id':0, '__v':0}).exec(function(err, response){
         if(err) throw err;
         res.status(200);
@@ -36,7 +35,7 @@ router.get("/:type/:value", function(req, res){
 
 
 router.post("/", function(req, res){
-	console.log("auth_key="+req.header("auth_key"));
+	//console.log("auth_key="+req.header("auth_key"));
     if(!req.body.user_id || !req.body.user_fullname){
         res.status(400);
         res.json({message: "Bad Request"});
@@ -49,7 +48,7 @@ router.post("/", function(req, res){
             user_name: req.body.user_name || '',
             user_fullname: req.body.user_fullname,          
             created_on: utility.current_date(),
-            user_image: req.body.image_url || '',
+            user_image: req.body.user_image || '',
             user_bio: req.body.bio|| '',
             isadmin:req.body.isadmin||0,
             orgnization: req.body.orgnization||''

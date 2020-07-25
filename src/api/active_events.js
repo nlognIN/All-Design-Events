@@ -58,7 +58,7 @@ router.get("/:type/:value", function(req, res){
 
 
 router.post("/", function(req, res){
-	console.log("auth_key="+req.header("auth_key"));
+	//console.log("auth_key="+req.header("auth_key"));
     if(!req.body.user_id || !req.body.event_title || !req.body.location ||
      !req.body.event_date || !req.body.price || !req.body.mode || !req.body.organizer){
         res.status(400);
@@ -94,7 +94,7 @@ router.post("/", function(req, res){
                res.json({message: "Database error", type: err});
              else{
                 res.status(201);
-                res.json({Status:"Success"});
+                res.json({insrt_result});
             }
          });
     }   
