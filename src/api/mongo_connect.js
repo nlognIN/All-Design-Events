@@ -33,6 +33,7 @@ var past_eventschema = mongoose.Schema({
     registration_link: String,
     event_date: String,
     event_time: String,
+    event_time_zone:String,
     price: String,
     mode: String,
     organizer: String,

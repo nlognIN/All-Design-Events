@@ -13,6 +13,15 @@ router.get("/", function(req, res){
     
 });
 
+router.get("/orgnizations", function(req, res){
+    user_db.find({},{'_id':0, '__v':0}).exec(function(err, response){
+      if(err) throw err;
+      res.status(200);
+      res.json(response);
+     })
+  
+});
+
 router.get("/:type/:value", function(req, res){
     if(req.params.type!="user_id"){
         res.status(400);
