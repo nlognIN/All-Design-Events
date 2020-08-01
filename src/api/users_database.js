@@ -36,7 +36,7 @@ router.get("/:type/:value", function(req, res){
 
 router.post("/", function(req, res){
 	//console.log("auth_key="+req.header("auth_key"));
-    if(!req.body.user_id || !req.body.user_fullname){
+    if(!req.body.user_id || !req.body.user_fullname || !req.body.organization){
         res.status(400);
         res.json({message: "Bad Request"});
     }
@@ -51,7 +51,8 @@ router.post("/", function(req, res){
             user_image: req.body.user_image || '',
             user_bio: req.body.bio|| '',
             isadmin:req.body.isadmin||0,
-            orgnization: req.body.orgnization||''
+            organization: req.body.organization||'',
+
           });
 
         user_db.find({["user_id"]:user_name_recieved},{'_id':0,'__v':0},function(err, response){

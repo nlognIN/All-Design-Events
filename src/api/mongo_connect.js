@@ -14,6 +14,7 @@ var eventschema = mongoose.Schema({
     registration_link: String,
     event_date: String,
     event_time: String,
+    event_time_zone:String,
     price: String,
     mode: String,
     organizer: String,
@@ -38,7 +39,9 @@ var past_eventschema = mongoose.Schema({
     image: String,
     description: String,
     clicks: Number,
-    links: String
+    youtube: String,
+    blog: String,
+    other: String
 });
 
 /* Registered Users Schema */
@@ -50,7 +53,8 @@ var userschema = mongoose.Schema({
     user_image: String,
     user_bio: String,
     isadmin: Number,
-    organization: String
+    organization: String,
+    organization_image:String
 });
 
 /* Event Registration Schema */

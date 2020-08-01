@@ -74,6 +74,7 @@ curl -X POST http://localhost:3000/api/events/ -H 'content-type: application/jso
 4. registration_link: optional
 5. event_date: mandatory
 6. event_time: optional
+7. event_time_zone: mandatory
 7. price: mandatory
 8. mode: mandatory
 9. oranizer: mandatory
@@ -96,12 +97,14 @@ curl -X GET http://localhost:3000/api/past_events?pageNum=val  - Return skips fi
 curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/json' -d '
 { 
 	
-	"slug":"-------", 
-	"links":"------" 
+	"slug":"--------", 
+	"youtube":"-----",
+	"blog":"--------" 
 } '
 
 1. slug: mandatory
-2. links: mandatory
+2. youtube: mandatory  (anyone or all among youtube and blog)
+3. blog: mandatory (anyone or all among youtube and blog)
 
 
 ---
@@ -124,7 +127,7 @@ curl -X POST http://localhost:3000/api/users -H 'content-type: application/json'
 	"user_image":"---------"
 	"user_bio: "----------",
     "isadmin": 1 or 0, 
-	"orgnization":"-------",
+	"oragnization":"-------",
 } '
 
 1. user_id: mandatory (this will be the email address)

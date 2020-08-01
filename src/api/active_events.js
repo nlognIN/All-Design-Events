@@ -82,6 +82,7 @@ router.post("/", function(req, res){
             registration_link: reg_link,
             event_date: req.body.event_date,
             event_time: req.body.event_time || '',
+            event_time_zone: req.body.event_time_zone || '',
             price: req.body.price,
             mode: req.body.mode,
             organizer: req.body.organizer,

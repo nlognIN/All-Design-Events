@@ -32,23 +32,26 @@ router.get("/", function(req, res){
 });
 
 router.put("/", function(req, res){
-    if(!req.body.slug || !req.body.links){
+    if(!req.body.slug || (!req.body.youtube && !req.body.blog)){
         res.status(400);
         res.json({message: "Bad Request"});
     }
     else{
         var url = req.body.links;
         var key = req.body.slug;
+
+        update_links = {"blog": req.body.blog || '',
+                        "youtube": req.body.youtube||''}
  
-      past_events.findOneAndUpdate({"slug":key},{$set:{"links":url}},{new: true}).exec(function(err,response){
-             if(err)
-                res.json({message: "Query error", type:err});
-             else{
-                res.status(201);
-                res.json({Status:"Success",Details: response});
-            }
-        });
-    }
+        past_events.findOneAndUpdate({"slug":key},{$set:update_links},{new: true}).exec(function(err,response){
+                if(err)
+                    res.json({message: "Query error", type:err});
+                else{
+                    res.status(201);
+                    res.json({Status:"Success",Details: response});
+                }
+            });
+        }
 });
 
 module.exports = router;

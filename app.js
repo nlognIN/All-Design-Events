@@ -18,8 +18,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-var j = schedule.scheduleJob('10 9 22 * * *', function(){
-//var j = schedule.scheduleJob('10 41 10 * * *', function(){
+//var j = schedule.scheduleJob('10 9 22 * * *', function(){
+var j = schedule.scheduleJob('10 08 17 * * *', function(){
 	migration_api.migrate()
 });
 

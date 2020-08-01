@@ -25,14 +25,17 @@ module.exports = {
 			            location: response[i].location,
 			            registration_link: response[i].registration_link,
 			            event_date: response[i].event_date,
-			            event_time: response[i].event_time || '',
+						event_time: response[i].event_time || '',
+						event_time_zone: response[i].event_time || '', 
 			            price: response[i].price,
 			            mode: response[i].mode,
 			            organizer: response[i].organizer,
 			            image: response[i].image || "",
 						description: response[i].description || "",
-						clicks: response[i].clicks,
-						links: ""
+						clicks: 0,
+						youtube: "",
+    					blog: "",
+    					other: ""
 			        });
 
 			        newEvent.save(function(err, temp_response){
