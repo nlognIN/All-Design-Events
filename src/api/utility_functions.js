@@ -60,8 +60,6 @@ module.exports = {
                 past_events.findOneAndUpdate({"slug":slug},{$set:{"clicks":reg_count}},{new: true}).exec(function(err,response){
 					if(err)
 						console.log("registration count updation failed");
-					else
-						console.log("count updation successful");
 				});
             }
         });
