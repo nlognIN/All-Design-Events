@@ -14,7 +14,7 @@ router.get("/", function(req, res){
 });
 
 router.get("/orgnizations", function(req, res){
-    user_db.find({},{'_id':0, '__v':0}).exec(function(err, response){
+    user_db.find({},{'organization':1, 'organization_image':1,'_id':0}).exec(function(err, response){
       if(err) throw err;
       res.status(200);
       res.json(response);
@@ -61,7 +61,7 @@ router.post("/", function(req, res){
             user_bio: req.body.bio|| '',
             isadmin:req.body.isadmin||0,
             organization: req.body.organization||'',
-
+            organization_image: req.body.organization_image||''
           });
 
         user_db.find({["user_id"]:user_name_recieved},{'_id':0,'__v':0},function(err, response){
@@ -76,7 +76,7 @@ router.post("/", function(req, res){
                             res.json({message: "Database error", type: err});
                         else{
                             res.status(201);
-                            res.json({ Message: "User Registered Succeaadully",insert_result});
+                            res.json({ Message: "User Registered Successfully",insert_result});
                         }
                     });
                 }

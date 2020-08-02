@@ -3,6 +3,7 @@ var router = express.Router();
 var utility = require('./utility_functions.js')
 var events = require('./mongo_connect.js')
 var active_events = events.active_events;
+var past_events = events.past_events;
 var itemsPerPage = 10;
 
 router.get("/", function(req, res){
@@ -45,11 +46,27 @@ router.get("/:type/:value", function(req, res){
         else{
             active_events.find({[type]:value},{'_id':0,'__v':0},function(err, response){
                 if(err){
-                    res.json({message: "Bad Request", value:req.params.type});
+                    console.log("in error")
                 }
                 else{
-                    res.status(200);
-                    res.json(response);
+                    if(!response.length)
+                    {
+                        console.log("here")
+                        past_events.find({[type]:value},{'_id':0,'__v':0},function(err, past_res){
+                            if(err){
+                                res.status(404);
+                                res.json({message: "Not found"});
+                            }
+                            else{
+                                res.status(200);
+                                res.json(past_res);
+                            }
+                        });
+                    }
+                    else{
+                        res.status(200);
+                        res.json(response);
+                    }
                 }
             });
         }
@@ -68,10 +85,10 @@ router.post("/", function(req, res){
         var reg_link;
         var temp_slug = utility.generate_slug(req.body.event_title);
         
-        if(!req.body.registration_link)
+        if(req.body.registration_link)
             reg_link = req.body.registration_link;
         else
-            reg_link = "https://alldesignevents.in/"+req.body.registration_link;
+            reg_link = "https://alldesignevents.in/"+temp_slug;
 
         var newEvent = new active_events({
             user_id: req.body.user_id,
@@ -88,7 +105,7 @@ router.post("/", function(req, res){
             organizer: req.body.organizer,
             image: req.body.image || "",
             description: req.body.description || "",
-            clicks: 0
+            isactive: "true"
           });
           newEvent.save(function(err, insrt_result){
              if(err)
@@ -101,51 +118,4 @@ router.post("/", function(req, res){
     }   
 });
 
-/*
-router.put("/", function(req, res){
-    if(!req.body.movieId){
-        res.status(400);
-        res.json({message: "Bad Request",Details: {movieId:id, Name:req.body.name, Year: req.body.year, rating: req.body.rating}});
-    }
-    else{
-        var movieId = req.body.movieId;
-        var newMovie ={
-            name: req.body.name||"N/A",
-            year: req.body.year||0,
-            rating: req.body.rating||0
-        };
-          //delete newMovie._id;
-         // console.log(newMovie);
-      events.findOneAndUpdate({"movieId":movieId},{$set:newMovie},{new: true}).exec(function(err,response){
-             if(err)
-                res.json({message: "Query error", type:err});
-             else{
-                res.status(201);
-                res.json({Status:"Success",Details: response});
-            }
-        });
-          id=id+1;
-    }
-});
-
-router.delete("/:type/:value", function(req, res){
-    if(req.params.type!="name"&&req.params.type!="year"&&req.params.type!="movieId"){
-        res.status(400);
-        res.json({message: "Bad Request", value:req.params.type});
-    }
-    else{
-        var type = req.params.type;
-        var value = req.params.value;
-        events.deleteOne({[type]:value},function(err, mov){
-            if(err){
-                 res.json({message: "Database error", type: "error"});
-            }
-            else{
-                res.status(200);
-                res.json({Status:"Success",Removed: {[type]:value}});
-            }
-        });
-    }
-});
-*/
 module.exports = router;

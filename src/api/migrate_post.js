@@ -16,7 +16,8 @@ module.exports = {
 	        else{
 
 	            for(var i=0; i<response.length; i++){
-	           	 
+					
+					var slug =  response[i].slug;
 			        var newEvent = new past_events({
 			            user_id: response[i].user_id,
 			            event_title: response[i].event_title,
@@ -26,7 +27,7 @@ module.exports = {
 			            registration_link: response[i].registration_link,
 			            event_date: response[i].event_date,
 						event_time: response[i].event_time || '',
-						event_time_zone: response[i].event_time || '', 
+						event_time_zone: response[i].event_time_zone || '', 
 			            price: response[i].price,
 			            mode: response[i].mode,
 			            organizer: response[i].organizer,
@@ -35,13 +36,17 @@ module.exports = {
 						clicks: 0,
 						youtube: "",
     					blog: "",
-    					other: ""
+						other: "",
+						isactive: "false"
 			        });
 
 			        newEvent.save(function(err, temp_response){
 			            if(err){
 			               	console.log("error in migrating post");
-			            }
+						}
+						else{
+							utility.registration_count(slug);
+						}
 			            
 			    	});	
 		        }

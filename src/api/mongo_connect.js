@@ -20,7 +20,7 @@ var eventschema = mongoose.Schema({
     organizer: String,
     image: String,
     description: String,
-    clicks: Number
+    isactive:String
 });
 
 /* Past Events Schema */
@@ -42,7 +42,8 @@ var past_eventschema = mongoose.Schema({
     clicks: Number,
     youtube: String,
     blog: String,
-    other: String
+    other: String,
+    isactive:String
 });
 
 /* Registered Users Schema */

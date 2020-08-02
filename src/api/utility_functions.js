@@ -1,4 +1,7 @@
 var crypto = require('crypto');
+var events = require('./mongo_connect.js')
+var events_reg = events.events_registrations;
+var past_events = events.past_events;
 module.exports = {
 
 	generate_slug:function(str){
@@ -18,8 +21,9 @@ module.exports = {
 	    	.replace(/\s+/g, '-') // collapse whitespace and replace by -
 	    	.replace(/-+/g, '-'); // collapse dashes
 
-	    var hash = crypto.createHash('md5').update(str).digest('hex')
-	 	return str +'-'+ hash.slice(0,6);
+		var hash = crypto.createHash('md5').update(str).digest('hex')
+		var rand_pad = Math.floor(Math.random() * (999)) + 10
+	 	return str +'-'+ hash.slice(0,4)+rand_pad.toString();
 	},
 
 
@@ -41,5 +45,25 @@ module.exports = {
 		today = dd+'/'+mm+'/'+yyyy;
 
 		return today;
+	},
+
+	registration_count:function(slug){
+		
+		var reg_count = 0;
+		var type = "event_id";
+        events_reg.find({[type]:slug},{'_id':0,'__v':0},function(err, response){
+            if(err){
+				console.log("can't create the registration count")
+			}
+            else{
+				reg_count = response[0]['reg_users'].length;
+                past_events.findOneAndUpdate({"slug":slug},{$set:{"clicks":reg_count}},{new: true}).exec(function(err,response){
+					if(err)
+						console.log("registration count updation failed");
+					else
+						console.log("count updation successful");
+				});
+            }
+        });
 	}
 }

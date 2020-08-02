@@ -19,7 +19,7 @@ router.get("/:type/:value", function(req, res){
                     res.json({message: "Bad Request", value:req.params.type});
             else{
                 res.status(200);
-                res.json(response);
+            res.json(response);
             }
         });
     }
