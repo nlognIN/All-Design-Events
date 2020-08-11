@@ -37,7 +37,6 @@ router.put("/", function(req, res){
         res.json({message: "Bad Request"});
     }
     else{
-        var url = req.body.links;
         var key = req.body.slug;
 
         update_links = {"blog": req.body.blog || '',

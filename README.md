@@ -123,9 +123,9 @@ curl -X GET http://localhost:3000/api/users  - Return all users and all correspo
 
 curl -X GET http://localhost:3000/api/users/user_id/value  - Returns all the details of a user, uniquely represetned using using user_id(which is email)
 
-### GET Request format for Orgnizations
+### GET Request format for Organizations
 
-curl -X GET http://localhost:3000/api/users/orgnizations  - Return all organizations and their logo urls
+curl -X GET http://localhost:3000/api/users/organizations  - Return all organizations and their logo urls
 
 
 ### POST Request format for Users Database
@@ -147,9 +147,25 @@ curl -X POST http://localhost:3000/api/users -H 'content-type: application/json'
 3. user_image: optional
 4. user_bio: optional
 5. isadmin: mandatory (values should be 1 or 0. 1:yes, 0:no, default value 0)
-6. orgnization: mandatory
-7. organization 
-8. organization_image: optional
+6. organization: optional
+7. organization_image: optional
+
+### PUT Request format for Users Database
+
+curl -X POST http://localhost:3000/api/users -H 'content-type: application/json' -d '
+{ 
+	
+	"user_id":"-------", 
+	"organization":"-------",
+	"organization_image":"---",
+} '
+
+1. user_id: mandatory (this will be the email address)
+2. organization: mandatory
+3. organization_image: optional
+
+
+---
 
 
 ### Request format for Users Subscription to Events

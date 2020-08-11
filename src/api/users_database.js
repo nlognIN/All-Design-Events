@@ -13,7 +13,7 @@ router.get("/", function(req, res){
     
 });
 
-router.get("/orgnizations", function(req, res){
+router.get("/organizations", function(req, res){
     user_db.find({},{'organization':1, 'organization_image':1,'_id':0}).exec(function(err, response){
       if(err) throw err;
       res.status(200);
@@ -45,7 +45,7 @@ router.get("/:type/:value", function(req, res){
 
 router.post("/", function(req, res){
 	//console.log("auth_key="+req.header("auth_key"));
-    if(!req.body.user_id || !req.body.user_fullname || !req.body.organization){
+    if(!req.body.user_id || !req.body.user_fullname){
         res.status(400);
         res.json({message: "Bad Request"});
     }
@@ -86,6 +86,47 @@ router.post("/", function(req, res){
                 }
             }
         });
+    }   
+});
+
+router.put("/", function(req, res){
+	//console.log("auth_key="+req.header("auth_key"));
+    if(!req.body.user_id || !req.body.organization){
+
+        res.status(400);
+        res.json({message: "Bad Request"});
+    }
+    else{
+        user_id_recieved = req.body.user_id;
+
+        user_db.find({["user_id"]:user_id_recieved}, function(err, response){
+            if(err){
+               res.json({message: "Database error", type: err});
+            }
+            else{
+                if(!response.length){
+                    res.status(404);
+                    res.json({Message:"User not Found"});
+                }
+                else{
+                    var update_values = {
+                        organization: req.body.organization,
+                        organization_image: req.body.organization_image ||''
+                      };
+
+                      user_db.findOneAndUpdate({"user_id":user_id_recieved},{$set:update_values},{new: true}).exec(function(err,updated_value){
+                        if(err){
+                            res.status(500);
+                            res.json({message: "Internal Server Error", type:err});
+                        }
+                        else{
+                            res.status(200);
+                            res.json({Status:"Success",Details: updated_value});
+                        }
+                      });
+                }   
+            }
+         });
     }   
 });
 

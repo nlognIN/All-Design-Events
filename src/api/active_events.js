@@ -118,4 +118,51 @@ router.post("/", function(req, res){
     }   
 });
 
+router.put("/", function(req, res){
+	//console.log("auth_key="+req.header("auth_key"));
+    if(!req.body.slug){
+
+        res.status(400);
+        res.json({message: "Bad Request"});
+    }
+    else{
+        var event_id = req.body.slug;
+
+          active_events.find({["slug"]:event_id}, function(err, response){
+             if(err)
+               res.json({message: "Database error", type: err});
+             else{
+                if(!response.length){
+                    res.status(404);
+                    res.json({Message:"Event not Found"});
+                }
+                else{
+                    var update_values = {
+                        event_title: req.body.event_title || response[0]['event_title'],
+                        location: req.body.location || response[0]['location'],
+                        event_date: req.body.event_date || response[0]['event_date'],
+                        event_time: req.body.event_time || response[0]['event_time'],
+                        price: req.body.price || response[0]['price'],
+                        mode: req.body.mode || response[0]['mode'],
+                        organizer: req.body.organizer || response[0]['organizer'],
+                        image: req.body.image || response[0]['image'],
+                        description: req.body.description || response[0]['description']
+                      };
+
+                      active_events.findOneAndUpdate({"slug":event_id},{$set:update_values},{new: true}).exec(function(err,updated_value){
+                        if(err){
+                            res.status(500);
+                            res.json({message: "Internal Server Error", type:err});
+                        }
+                        else{
+                            res.status(200);
+                            res.json({Status:"Success",Details: updated_value});
+                        }
+                      });
+                }   
+            }
+         });
+    }   
+});
+
 module.exports = router;
