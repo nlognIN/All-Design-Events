@@ -82,7 +82,7 @@ router.post("/", function(req, res){
                 }
                 else{
                     res.status(200);
-                    res.json({Message:"User already exists"});
+                    res.json({Message:"User already exists", response});
                 }
             }
         });
