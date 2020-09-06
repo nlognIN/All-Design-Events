@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
- 
 mongoose.connect('mongodb://localhost/design_events', { useNewUrlParser: true , useFindAndModify: false, useUnifiedTopology: true });
 
 /* Schema Start */

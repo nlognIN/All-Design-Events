@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+const middleware = require('./middleware/verify_user.js')
 const {Parser} = require('json2csv');
 var events = require('./mongo_connect.js')
 var events_reg = events.events_registrations;
 
-router.get("/:type/:value", function(req, res){
+router.get("/:type/:value", middleware.verify, function(req, res){
     if(req.params.type != 'slug'){
        res.status(400);
         res.json({Message:"Error in creating CSV"})

@@ -2,7 +2,7 @@ var utility = require('./utility_functions.js')
 var events = require('./mongo_connect.js')
 var active_events = events.active_events;
 var past_events = events.past_events;
-
+var middleware = require('./middleware/verify_user.js')
 module.exports = {
 
 	migrate:function(){

@@ -69,12 +69,12 @@ curl -X GET http://localhost:3000/api/events/key/value?pageNum=val
 curl -X POST http://localhost:3000/api/events/ -H 'content-type: application/json' -d '{"user_id":"---","event_title":"---","location":"---","registration_link":"---","event_date":"---","time":"---","price":"---","mode":"---","organizer":"---","image":"---", "description":"---"}'
 
 1. user_id: mandatory
-2. event title: mandatory
+2. event title: mandatory	
 3. location: mandatory
 4. registration_link: optional
 5. event_date: mandatory
 6. event_time: optional
-7. event_time_zone: mandatory
+7. event_time_zone: optional
 7. price: mandatory
 8. mode: mandatory
 9. organizer: mandatory
@@ -101,7 +101,7 @@ isactive: "false"  (string)
 
 curl -X PUT http://localhost:3000/api/past_events -H 'content-type: application/json' -d '
 { 
-	
+	"user_id":"-----",
 	"slug":"--------", 
 	"youtube":"-----",
 	"blog":"--------" 

@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var utility = require('./utility_functions.js')
-var users = require('./mongo_connect.js')
+var utility = require('./utility_functions')
+var users = require('./mongo_connect')
 var user_db = users.users_db;
+var middleware = require('./middleware/verify_user')
 
-router.get("/", function(req, res){
+router.get("/", middleware.verify, function(req, res){
       user_db.find({},{'_id':0, '__v':0}).exec(function(err, response){
         if(err) throw err;
         res.status(200);
@@ -13,7 +14,7 @@ router.get("/", function(req, res){
     
 });
 
-router.get("/organizations", function(req, res){
+router.get("/organizations", middleware.verify, function(req, res){
     user_db.find({},{'organization':1, 'organization_image':1,'_id':0}).exec(function(err, response){
       if(err) throw err;
       res.status(200);
@@ -22,7 +23,7 @@ router.get("/organizations", function(req, res){
   
 });
 
-router.get("/:type/:value", function(req, res){
+router.get("/:type/:value", middleware.verify, function(req, res){
     if(req.params.type!="user_id"){
         res.status(400);
         res.json({message: "Bad Request", value:req.params.type});
@@ -43,8 +44,8 @@ router.get("/:type/:value", function(req, res){
 });
 
 
-router.post("/", function(req, res){
-	//console.log("auth_key="+req.header("auth_key"));
+router.post("/", middleware.verify, function(req, res){
+	
     if(!req.body.user_id || !req.body.user_fullname){
         res.status(400);
         res.json({message: "Bad Request"});
@@ -89,8 +90,8 @@ router.post("/", function(req, res){
     }   
 });
 
-router.put("/", function(req, res){
-	//console.log("auth_key="+req.header("auth_key"));
+router.put("/", middleware.verify, function(req, res){
+
     if(!req.body.user_id || !req.body.organization){
 
         res.status(400);

@@ -13,7 +13,11 @@ var eventreg_api = require('./src/api/event_subscription.js')
 var export_csv = require('./src/api/export_csv');
 
 var app = express();
-app.use(cors());
+var allowedOrigins = ['http://yourapp.com'];
+					  
+app.use(cors({
+	origin: 'http://yourapp.com'
+  }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
