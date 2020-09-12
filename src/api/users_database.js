@@ -5,7 +5,7 @@ var users = require('./mongo_connect')
 var user_db = users.users_db;
 var middleware = require('./middleware/verify_user')
 
-router.get("/", middleware.verify, function(req, res){
+router.get("/", function(req, res){
       user_db.find({},{'_id':0, '__v':0}).exec(function(err, response){
         if(err) throw err;
         res.status(200);
@@ -14,7 +14,7 @@ router.get("/", middleware.verify, function(req, res){
     
 });
 
-router.get("/organizations", middleware.verify, function(req, res){
+router.get("/organizations", function(req, res){
     user_db.find({},{'organization':1, 'organization_image':1,'_id':0}).exec(function(err, response){
       if(err) throw err;
       res.status(200);
@@ -23,7 +23,7 @@ router.get("/organizations", middleware.verify, function(req, res){
   
 });
 
-router.get("/:type/:value", middleware.verify, function(req, res){
+router.get("/:type/:value", function(req, res){
     if(req.params.type!="user_id"){
         res.status(400);
         res.json({message: "Bad Request", value:req.params.type});
