@@ -13,19 +13,11 @@ var eventreg_api = require('./src/api/event_subscription.js')
 var export_csv = require('./src/api/export_csv');
 
 var app = express();
-
-var whitelist = ['localhost','https://alldesignevents.in']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback('You are not allowed to perform any operation. Are you are a bot?')
-    }
-  }
-}
-
-app.use(cors(corsOptions));
+var allowedOrigins = ['http://yourapp.com'];
+					  
+app.use(cors({
+	origin: 'http://yourapp.com'
+  }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
